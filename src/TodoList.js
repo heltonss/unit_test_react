@@ -11,7 +11,9 @@ export default class TodoList extends Component {
   };
 
   handleAddTodo = () => {
-    this.setState({ todos: [...this.state.todos, this.state.newTodo] });
+    this.setState({ todos: [...this.state.todos, this.state.newTodo] }, () => {
+      localStorage.setItem('todos', JSON.stringify(this.state.todos));
+    });
   };
 
   render() {

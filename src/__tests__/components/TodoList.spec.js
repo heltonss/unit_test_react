@@ -21,3 +21,18 @@ it('Should render the list and button', () => {
 
   expect(wrapper.find('ul').contains(<li>Novo todo</li>));
 });
+
+it('Should add new todo to local storage', () => {
+  const wrapper = mount(<TodoList />);
+  const mockLocalItem = jest.fn();
+
+  global.localStorage.__proto__.setItem = mockLocalItem;
+
+  wrapper.setState({ newTodo: 'Novo todo' });
+  wrapper.instance().handleAddTodo();
+
+  expect(mockLocalItem).toHaveBeenLastCalledWith(
+    'todos',
+    JSON.stringify(['Novo todo'])
+  );
+});
